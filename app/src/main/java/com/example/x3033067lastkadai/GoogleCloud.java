@@ -17,6 +17,14 @@ import java.util.List;
 //まだapiキー発行できてない。
 //動作確認も全くできていない。
 //google cloudの利用自体に手こずっている。
+
+//6/24
+//apiキーは発行できた。
+//AIzaSyAWajvF8OL0K2vF1939pJFx4NnqLbMJm7E
+//ただしこのコードが動くのはgcp上のみということが判明。
+//import gcp的なのがあるが、これ全部ローカルではimportできない。
+//cloud shell上なら実行できる。
+//なんとかして、ローカルのandroid studioで実行したい。
 class GoogleCloud {
     /** Demonstrates using the Speech API to transcribe an audio file. */
     public static void main(String... args) throws Exception {
