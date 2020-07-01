@@ -35,3 +35,57 @@ s-install-java
 これ見てわかる通り、apiはweb上で走らせるようなことしか言ってない。
 デプロイと並行してやることになるかもしれない。(デプロイしないとapiの部分はちゃんと動く
 かわからない可能性高い。
+
+(base) satoutsuyoshiakiranoMacBook-puro:x3033067LastKadai satoumotoaki$ keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
+別名: androiddebugkey
+作成日: 2019/12/17
+エントリ・タイプ: PrivateKeyEntry
+証明書チェーンの長さ: 1
+証明書[1]:
+所有者: C=US, O=Android, CN=Android Debug
+発行者: C=US, O=Android, CN=Android Debug
+シリアル番号: 1
+有効期間の開始日: Tue Dec 17 11:18:37 JST 2019終了日: Thu Dec 09 11:18:37 JST 2049
+証明書のフィンガプリント:
+         SHA1: BB:E8:9D:4F:38:EA:7B:3E:16:F9:78:5D:0F:30:E0:3E:B4:08:28:3C
+         SHA256: 57:80:F8:85:B4:72:82:F6:D9:F8:1C:74:7E:30:5C:C7:E4:30:74:09:75:5E:78:D9:91:FB:46:9A:F6:B8:E2:18
+署名アルゴリズム名: SHA1withRSA
+サブジェクト公開キー・アルゴリズム: 2048ビットRSAキー
+バージョン: 1
+
+Warning:
+JKSキーストアは独自の形式を使用しています。"keytool -importkeystore -srckeystaki/.android/debug.keystore -destkeystore /Users/satoumotoaki/.android/debug.keystore -deststoretype pkcs12"を使用する業界標準の形式であるPKCS12に移行することをお薦めします。
+(base) satoutsuyoshiakiranoMacBook-puro:x3033067LastKadai satoumotoaki$
+
+
+
+(base) satoutsuyoshiakiranoMacBook-puro:x3033067lastkadai satoumotoaki$ keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android
+別名: androiddebugkey
+作成日: 2019/12/17
+エントリ・タイプ: PrivateKeyEntry
+証明書チェーンの長さ: 1
+証明書[1]:
+所有者: C=US, O=Android, CN=Android Debug
+発行者: C=US, O=Android, CN=Android Debug
+シリアル番号: 1
+有効期間の開始日: Tue Dec 17 11:18:37 JST 2019終了日: Thu Dec 09 11:18:37 JST 2049
+証明書のフィンガプリント:
+         SHA1: BB:E8:9D:4F:38:EA:7B:3E:16:F9:78:5D:0F:30:E0:3E:B4:08:28:3C
+         SHA256: 57:80:F8:85:B4:72:82:F6:D9:F8:1C:74:7E:30:5C:C7:E4:30:74:09:75:5E:78:D9:91:FB:46:9A:F6:B8:E2:18
+署名アルゴリズム名: SHA1withRSA
+サブジェクト公開キー・アルゴリズム: 2048ビットRSAキー
+バージョン: 1
+
+Warning:
+JKSキーストアは独自の形式を使用しています。"keytool -importkeystore -srckeystore /Users/satoumotoaki/.android/debug.keystore -destkeystore /Users/satoumotoakitore -deststoretype pkcs12"を使用する業界標準の形式であるPKCS12に移行することをお薦めします。
+(base) satoutsuyoshiakiranoMacBook-puro:x3033067lastkadai satoumotoaki$
+
+
+7/1
+GASのエンジニアに質問する機会があったので質問させてもらった。
+https://techbooster.org/android/application/14927/
+https://qiita.com/fumiyakawauso/items/f58e7adb0a98c00e54ce?fbclid=IwAR2C4zBTrlwUG7LhiiuykPtX5OR4kOipcb-Bw1_xjMKd6DNJ-h2h-QWcHQA
+https://developer.android.com/training/wearables/apps/voice?hl=ja#FreeFormSpeech
+上記のwebサイトを紹介してくださった。
+つまり、この程度のアプリでgasを使うなということであった。
+素直にこのandroid developerのapiを使っていこうと思う。

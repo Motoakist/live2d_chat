@@ -14,5 +14,22 @@ public class MainActivity extends AppCompatActivity {
 
         Button addButton = (Button) findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
+
+        val recordAudioPermission = android.Manifest.permission.RECORD_AUDIO
+        val currentPermissionState = Context
+        Compat.checkSelfPermission(context, recordAudioPermission)
+        if (currentPermissionState != Packag
+        eManager.PERMISSION_GRANTED) {
+            if (Acti
+            vityCompat.shouldShowRequestPermissionRationale(context as Activity, recordAudioPermission)) {
+                // 拒否した場合
+                permissionState = false
+            } else {
+                // 許可した場合
+                ActivityC
+            ompat.requestPermissions(context, arrayOf(recordAudioPermission), 1)
+                permissionState = true
+            }
+        }
     }
 }
