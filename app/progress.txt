@@ -89,3 +89,21 @@ https://developer.android.com/training/wearables/apps/voice?hl=ja#FreeFormSpeech
 上記のwebサイトを紹介してくださった。
 つまり、この程度のアプリでgasを使うなということであった。
 素直にこのandroid developerのapiを使っていこうと思う。
+
+7/8
+speech recognizerの参考url
+https://note.com/npaka/n/n25e17564114b
+https://maku77.github.io/android/fw/speech-recognizer.html
+https://gist.github.com/ehu-151/740e6e4fb7a55a70f2274132562552dd
+これらを参考にして一応speech recognizerもimportでき、エラーも消えたが、実機でアプリを動かせない。
+
+エミュレーターでは音声認識はできない。
+色々調べた結果google usb driverなるものが必要と思ったが、android studio付随のドラブルシューターでは、
+usbケーブルもしくは実機そのものに問題があると診断された。
+公式ドキュメント:https://developer.android.com/studio/run/device
+ブログ(google usb driverのインストール方法)http://support.embarcadero.com/jp/article/43962
+新しい実機まちである。
+
+gcpが使えなくなったということで、感情分析ができなくなった→テキスト生成はapiに任せる。
+ユーザーローカルあたりが良いと考えている。
+https://qiita.com/ohtakazuki/items/c9961f7173ef5eaf41bd
