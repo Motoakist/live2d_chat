@@ -27,6 +27,13 @@ android:orientation="vertical">
         android:layout_height="wrap_content"
         android:text="送信"/>
 
+    <Button
+        android:id="@+id/mikeButton"
+        android:layout_width="0dip"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="マイク"/>
+
 </LinearLayout>
 
 <TextView
