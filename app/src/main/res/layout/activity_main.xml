@@ -1,44 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:gravity="top"
-android:orientation="vertical">
-
-<LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom"
-    android:orientation="horizontal">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/msgEditText"
-        android:layout_width="0dip"
-        android:layout_weight="8"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"/>
+        android:layout_above="@+id/buttonView"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        tools:text="ここにテキスト表示" />
 
     <Button
-        android:id="@+id/addButton"
-        android:layout_width="0dip"
-        android:layout_weight="1"
+        android:id="@+id/buttonView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="送信"/>
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="スタート" />
 
-    <Button
-        android:id="@+id/mikeButton"
-        android:layout_width="0dip"
-        android:layout_weight="1"
+    <TextView
+        android:id="@+id/countTextViwe"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="マイク"/>
+        android:layout_below="@id/buttonView"
+        android:layout_centerHorizontal="true"
+        android:textSize="23sp"
+        tools:text="あと5秒!" />
 
-</LinearLayout>
-
-<TextView
-    android:id="@+id/msgTextView"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-
-</LinearLayout>
+</RelativeLayout>

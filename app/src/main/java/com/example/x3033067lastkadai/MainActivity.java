@@ -1,10 +1,14 @@
 package com.example.x3033067lastkadai;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.app.Activity;
@@ -16,10 +20,18 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import static android.Manifest.permission.RECORD_AUDIO;
+
 
 public class MainActivity extends AppCompatActivity {
     private static String TAG = "Sample";
     private SpeechRecognizer mRecognizer;
+
+    private TextView textView;
+
+    private int count = 5;
+    private TextView countTextView;
+
     private RecognitionListener mRecognitionListener = new RecognitionListener() {
         @Override
         public void onError(int error) {
@@ -57,23 +69,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button addButton = (Button) findViewById(R.id.addButton);
-//        addButton.setOnClickListener(this);
+        textView = (TextView) findViewById(R.id.textView);
+        countTextView = (TextView) findViewById(R.id.countTextViwe);
 
-
-        // クリックイベントを取得したいボタン
-        Button button = (Button) findViewById(R.id.mikeButton);
-
-// ボタンに OnClickListener インターフェースを実装する
-        button.setOnClickListener(new View.OnClickListener() {
-
-            // クリック時に呼ばれるメソッド
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "クリックされました！", Toast.LENGTH_LONG).show();
-//                SpeechRecognizerSampleActivity.startSpeechRecognition();
+        // permission チェック
+        if (ContextCompat.checkSelfPermission(this, RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, RECORD_AUDIO)) {
+                // 拒否した場合
+            } else {
+                // 許可した場合
+                int MY_PERMISSIONS_RECORD_AUDIO = 1;
+                ActivityCompat.requestPermissions(this, new String[]{RECORD_AUDIO}, MY_PERMISSIONS_RECORD_AUDIO);
             }
-        });
+        }
+
+
 
 
     }
@@ -96,5 +106,7 @@ public class MainActivity extends AppCompatActivity {
         mRecognizer.startListening(intent);
     }
 
+    SpeechRecognizerSampleActivity srsa = new SpeechRecognizerSampleActivity;
+    srsa.startSpeechRecognition;
 
 }
