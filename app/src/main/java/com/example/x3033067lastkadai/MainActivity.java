@@ -50,20 +50,34 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onResults(Bundle results) {
-            ArrayList<String> values = results
-                    .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-            String val = values.get(0);
-            Log.d(TAG, "認識結果: " + val);
-            startSpeechRecognition();
+            String key = SpeechRecognizer.RESULTS_RECOGNITION;
+            ArrayList<String> mResult = bundle.getStringArrayList(key);
+
+            String[] result = new String[0];
+            if (mResult != null) {
+                result = new String[mResult.size()];
+            }
+            if (mResult != null) {
+                mResult.toArray(result);
+            }
+
+            textView.setText(result[0]);
+
+            // テキスト比較
+            if (TextUtils.equals(result[0], "メリークリスマス")) {
+                Toast.makeText(MainActivity.this, "あなたもね！！", Toast.LENGTH_SHORT).show();
+                countDownTimer.cancel();
+                countTextView.setText("");
+            }
         }
 
         @Override public void onBeginningOfSpeech() {}
-        @Override public void onBufferReceived(byte[] arg0) {}
+        @Override public void onBufferReceived(byte[] bundle) {}
         @Override public void onEndOfSpeech() {}
-        @Override public void onEvent(int arg0, Bundle arg1) {}
-        @Override public void onPartialResults(Bundle arg0) {}
-        @Override public void onReadyForSpeech(Bundle arg0) {}
-        @Override public void onRmsChanged(float arg0) {}
+        @Override public void onEvent(int bundle, Bundle arg1) {}
+        @Override public void onPartialResults(Bundle bundle) {}
+        @Override public void onReadyForSpeech(Bundle bundle) {}
+        @Override public void onRmsChanged(float bundle) {}
     };
 
 
@@ -118,25 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void countDownTimer() {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            count = 5;
-        }
 
-        countDownTimer = new CountDownTimer(MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL) {
-            public void onTick(long millisUntilFinished) {
-//                String countString = getString(R.string.count_string, count);
-//                countTextView.setText(countString);
-                count--;
-            }
-
-            public void onFinish() {
-                countDownTimer.cancel();
-                countTextView.setText(String.valueOf("やり直し？"));
-            }
-        };
-    }
 
 
     private void startSpeechRecognition() {
@@ -157,4 +153,23 @@ public class MainActivity extends AppCompatActivity {
     SpeechRecognizerSampleActivity srsa = new SpeechRecognizerSampleActivity;
     srsa.startSpeechRecognition;
 
+    public void countDownTimer() {
+        if (countDownTimer != null) {
+            countDownTimer.cancel();
+            count = 5;
+        }
+
+        countDownTimer = new CountDownTimer(MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL) {
+            public void onTick(long millisUntilFinished) {
+//                String countString = getString(R.string.count_string, count);
+//                countTextView.setText(countString);
+                count--;
+            }
+
+            public void onFinish() {
+                countDownTimer.cancel();
+                countTextView.setText(String.valueOf("やり直し？"));
+            }
+        };
+    }
 }
