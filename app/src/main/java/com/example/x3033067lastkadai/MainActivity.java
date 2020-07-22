@@ -21,15 +21,17 @@ import android.speech.SpeechRecognizer;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 
 
 public class MainActivity extends AppCompatActivity {
-    private static String TAG = "Sample";
+    private static final int MILLIS_IN_FUTURE = 11 * 500;
+    private static final int COUNT_DOWN_INTERVAL = 1000;
+
     private SpeechRecognizer mRecognizer;
     private Intent intent;
-
     private TextView textView;
 
     private int count = 5;
@@ -39,13 +41,45 @@ public class MainActivity extends AppCompatActivity {
 
     private RecognitionListener mRecognitionListener = new RecognitionListener() {
         @Override
-        public void onError(int error) {
-            if ((error == SpeechRecognizer.ERROR_NO_MATCH) ||
-                    (error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT)) {
-                startSpeechRecognition();
-                return;
+        public void onError(int i) {
+            switch (i) {
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                    resetText();
+                    textView.setText("ネットワークタイムエラー");
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK:
+                    resetText();
+                    textView.setText("その外ネットワークエラー");
+                    break;
+                case SpeechRecognizer.ERROR_AUDIO:
+                    resetText();
+                    textView.setText("Audio エラー");
+                    break;
+                case SpeechRecognizer.ERROR_SERVER:
+                    resetText();
+                    textView.setText("サーバーエラー");
+                    break;
+                case SpeechRecognizer.ERROR_CLIENT:
+                    resetText();
+                    textView.setText("クライアントエラー");
+                    break;
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                    resetText();
+                    textView.setText("何も聞こえてないエラー");
+                    break;
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                    resetText();
+                    textView.setText("適当な結果を見つけてませんエラー");
+                    break;
+                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                    resetText();
+                    textView.setText("RecognitionServiceが忙しいエラー");
+                    break;
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                    resetText();
+                    textView.setText("RECORD AUDIOがないエラー");
+                    break;
             }
-            Log.d(TAG, "Recognition Error: " + error);
         }
 
         @Override
@@ -80,6 +114,10 @@ public class MainActivity extends AppCompatActivity {
         @Override public void onRmsChanged(float bundle) {}
     };
 
+    private void resetText() {
+        countDownTimer.cancel();
+        countTextView.setText("やり直し！");
+    }
 
 
 
@@ -104,8 +142,10 @@ public class MainActivity extends AppCompatActivity {
 
         intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.JAPAN.toString());
 
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        mRecognizer.setRecognitionListener(recognitionListener);
 
         // 音声認識スタートボタン
         Button button = (Button) findViewById(R.id.buttonView);
@@ -126,8 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 mRecognizer.startListening(intent);
             }
         });
-
-
 
     }
 
