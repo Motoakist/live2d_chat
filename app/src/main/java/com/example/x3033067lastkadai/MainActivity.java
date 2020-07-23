@@ -4,122 +4,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 
-
 public class MainActivity extends AppCompatActivity {
+
     private static final int MILLIS_IN_FUTURE = 11 * 500;
     private static final int COUNT_DOWN_INTERVAL = 1000;
 
-    private SpeechRecognizer mRecognizer;
     private Intent intent;
+    private SpeechRecognizer mRecognizer;
     private TextView textView;
 
     private int count = 5;
-    private CountDownTimer countDownTimer;
-
     private TextView countTextView;
-
-    private RecognitionListener mRecognitionListener = new RecognitionListener() {
-        @Override
-        public void onError(int i) {
-            switch (i) {
-                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-                    resetText();
-                    textView.setText("ネットワークタイムエラー");
-                    break;
-                case SpeechRecognizer.ERROR_NETWORK:
-                    resetText();
-                    textView.setText("その外ネットワークエラー");
-                    break;
-                case SpeechRecognizer.ERROR_AUDIO:
-                    resetText();
-                    textView.setText("Audio エラー");
-                    break;
-                case SpeechRecognizer.ERROR_SERVER:
-                    resetText();
-                    textView.setText("サーバーエラー");
-                    break;
-                case SpeechRecognizer.ERROR_CLIENT:
-                    resetText();
-                    textView.setText("クライアントエラー");
-                    break;
-                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                    resetText();
-                    textView.setText("何も聞こえてないエラー");
-                    break;
-                case SpeechRecognizer.ERROR_NO_MATCH:
-                    resetText();
-                    textView.setText("適当な結果を見つけてませんエラー");
-                    break;
-                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                    resetText();
-                    textView.setText("RecognitionServiceが忙しいエラー");
-                    break;
-                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-                    resetText();
-                    textView.setText("RECORD AUDIOがないエラー");
-                    break;
-            }
-        }
-
-        @Override
-        public void onResults(Bundle results) {
-            String key = SpeechRecognizer.RESULTS_RECOGNITION;
-            ArrayList<String> mResult = bundle.getStringArrayList(key);
-
-            String[] result = new String[0];
-            if (mResult != null) {
-                result = new String[mResult.size()];
-            }
-            if (mResult != null) {
-                mResult.toArray(result);
-            }
-
-            textView.setText(result[0]);
-
-            // テキスト比較
-            if (TextUtils.equals(result[0], "メリークリスマス")) {
-                Toast.makeText(MainActivity.this, "あなたもね！！", Toast.LENGTH_SHORT).show();
-                countDownTimer.cancel();
-                countTextView.setText("");
-            }
-        }
-
-        @Override public void onBeginningOfSpeech() {}
-        @Override public void onBufferReceived(byte[] bundle) {}
-        @Override public void onEndOfSpeech() {}
-        @Override public void onEvent(int bundle, Bundle arg1) {}
-        @Override public void onPartialResults(Bundle bundle) {}
-        @Override public void onReadyForSpeech(Bundle bundle) {}
-        @Override public void onRmsChanged(float bundle) {}
-    };
-
-    private void resetText() {
-        countDownTimer.cancel();
-        countTextView.setText("やり直し！");
-    }
-
-
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,30 +81,112 @@ public class MainActivity extends AppCompatActivity {
                 mRecognizer.startListening(intent);
             }
         });
-
     }
 
-
-
-
-
-    private void startSpeechRecognition() {
-        // Need to destroy a recognizer to consecutive recognition?
-        if (mRecognizer != null) {
-            mRecognizer.destroy();
+    private RecognitionListener recognitionListener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle bundle) {
+            Log.d("log:: ", "準備できてます");
         }
 
-        // Create a recognizer.
-        mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-        mRecognizer.setRecognitionListener(mRecognitionListener);
+        @Override
+        public void onBeginningOfSpeech() {
+            Log.d("log:: ", "始め！");
+        }
 
-        // Start recognition.
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        mRecognizer.startListening(intent);
+        @Override
+        public void onRmsChanged(float v) {
+            Log.d("log:: ", "音声が変わった");
+        }
+
+        @Override
+        public void onBufferReceived(byte[] bytes) {
+            Log.d("log:: ", "新しい音声");
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+            Log.d("log:: ", "終わりました");
+        }
+
+        @Override
+        public void onError(int i) {
+            switch (i) {
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                    resetText();
+                    textView.setText("ネットワークタイムエラー");
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK:
+                    resetText();
+                    textView.setText("その外ネットワークエラー");
+                    break;
+                case SpeechRecognizer.ERROR_AUDIO:
+                    resetText();
+                    textView.setText("Audio エラー");
+                    break;
+                case SpeechRecognizer.ERROR_SERVER:
+                    resetText();
+                    textView.setText("サーバーエラー");
+                    break;
+                case SpeechRecognizer.ERROR_CLIENT:
+                    resetText();
+                    textView.setText("クライアントエラー");
+                    break;
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                    resetText();
+                    textView.setText("何も聞こえてないエラー");
+                    break;
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                    resetText();
+                    textView.setText("適当な結果を見つけてませんエラー");
+                    break;
+                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                    resetText();
+                    textView.setText("RecognitionServiceが忙しいエラー");
+                    break;
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                    resetText();
+                    textView.setText("RECORD AUDIOがないエラー");
+                    break;
+            }
+        }
+
+        @Override
+        public void onResults(Bundle bundle) {
+            String key = SpeechRecognizer.RESULTS_RECOGNITION;
+            ArrayList<String> mResult = bundle.getStringArrayList(key);
+
+            String[] result = new String[0];
+            if (mResult != null) {
+                result = new String[mResult.size()];
+            }
+            if (mResult != null) {
+                mResult.toArray(result);
+            }
+
+            textView.setText(result[0]);
+
+            // テキスト比較
+            if (TextUtils.equals(result[0], "メリークリスマス")) {
+                Toast.makeText(MainActivity.this, "あなたもね！！", Toast.LENGTH_SHORT).show();
+                countDownTimer.cancel();
+                countTextView.setText("");
+            }
+        }
+
+        @Override
+        public void onPartialResults(Bundle bundle) {
+        }
+
+        @Override
+        public void onEvent(int i, Bundle bundle) {
+        }
+    };
+
+    private void resetText() {
+        countDownTimer.cancel();
+        countTextView.setText("やり直し！");
     }
-
-    SpeechRecognizerSampleActivity srsa = new SpeechRecognizerSampleActivity;
-    srsa.startSpeechRecognition;
 
     public void countDownTimer() {
         if (countDownTimer != null) {
@@ -210,4 +207,16 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        try {
+            countDownTimer.cancel();
+        } catch (Exception e) {
+            Log.e("EXCEPTION LOG ", "message:: " + e.getMessage());
+        }
+        countDownTimer = null;
+    }
+
 }
