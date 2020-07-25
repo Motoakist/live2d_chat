@@ -10,7 +10,12 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        externalNativeBuild {
+            ndk {
+                abiFilters = []
+                abiFilters.addAll(PROP_APP_ABI.split(':').collect{ it as String })
+            }
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -19,6 +24,15 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    externalNativeBuild {
+        cmake {
+            path file('CMakeLists.txt')
+            version "3.10.2"
+        }
+    }
+    sourceSets.main {
+        assets.srcDir "../Resources"
     }
 }
 
