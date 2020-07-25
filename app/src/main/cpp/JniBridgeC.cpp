@@ -35,7 +35,7 @@ jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)
         return JNI_ERR;
     }
 
-    jclass clazz = env->FindClass("com/example/x3033067/JniBridgeJava");
+    jclass clazz = env->FindClass("com/example/x3033067lastkadai/JniBridgeJava");
     g_JniBridgeJavaClass = reinterpret_cast<jclass>(env->NewGlobalRef(clazz));
     g_LoadFileMethodId = env->GetStaticMethodID(g_JniBridgeJavaClass, "LoadFile", "(Ljava/lang/String;)[B");
     g_MoveTaskToBackMethodId = env->GetStaticMethodID(g_JniBridgeJavaClass, "MoveTaskToBack", "()V");
@@ -74,61 +74,61 @@ void JniBridgeC::MoveTaskToBack()
 extern "C"
 {
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnStart(JNIEnv *env, jclass type)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnStart(JNIEnv *env, jclass type)
     {
         LAppDelegate::GetInstance()->OnStart();
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnPause(JNIEnv *env, jclass type)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnPause(JNIEnv *env, jclass type)
     {
         LAppDelegate::GetInstance()->OnPause();
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnStop(JNIEnv *env, jclass type)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnStop(JNIEnv *env, jclass type)
     {
         LAppDelegate::GetInstance()->OnStop();
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnDestroy(JNIEnv *env, jclass type)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnDestroy(JNIEnv *env, jclass type)
     {
         LAppDelegate::GetInstance()->OnDestroy();
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnSurfaceCreated(JNIEnv *env, jclass type)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnSurfaceCreated(JNIEnv *env, jclass type)
     {
         LAppDelegate::GetInstance()->OnSurfaceCreate();
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnSurfaceChanged(JNIEnv *env, jclass type, jint width, jint height)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnSurfaceChanged(JNIEnv *env, jclass type, jint width, jint height)
     {
         LAppDelegate::GetInstance()->OnSurfaceChanged(width, height);
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnDrawFrame(JNIEnv *env, jclass type)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnDrawFrame(JNIEnv *env, jclass type)
     {
         LAppDelegate::GetInstance()->Run();
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnTouchesBegan(JNIEnv *env, jclass type, jfloat pointX, jfloat pointY)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnTouchesBegan(JNIEnv *env, jclass type, jfloat pointX, jfloat pointY)
     {
         LAppDelegate::GetInstance()->OnTouchBegan(pointX, pointY);
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnTouchesEnded(JNIEnv *env, jclass type, jfloat pointX, jfloat pointY)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnTouchesEnded(JNIEnv *env, jclass type, jfloat pointX, jfloat pointY)
     {
         LAppDelegate::GetInstance()->OnTouchEnded(pointX, pointY);
     }
 
     JNIEXPORT void JNICALL
-    Java_com_example_x3033067_JniBridgeJava_nativeOnTouchesMoved(JNIEnv *env, jclass type, jfloat pointX, jfloat pointY)
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeOnTouchesMoved(JNIEnv *env, jclass type, jfloat pointX, jfloat pointY)
     {
         LAppDelegate::GetInstance()->OnTouchMoved(pointX, pointY);
     }
