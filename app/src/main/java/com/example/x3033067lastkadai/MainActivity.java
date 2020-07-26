@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,7 +106,7 @@ public class MainActivity extends Activity {
         mRecognizer.setRecognitionListener(recognitionListener);
 
         // 音声認識スタートボタン
-        Button button = (Button) findViewById(R.id.buttonView);
+        ImageButton button = (ImageButton) findViewById(R.id.buttonView);
         //ここが原因で落ちる...
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,11 +263,22 @@ public class MainActivity extends Activity {
             textView.setText(result[0]);
 
             // テキスト比較
-            if (TextUtils.equals(result[0], "メリークリスマス")) {
-                Toast.makeText(MainActivity.this, "あなたもね！！", Toast.LENGTH_SHORT).show();
+            if (TextUtils.equals(result[0], "おはようございます")) {
+                Toast.makeText(MainActivity.this, "おはよう！！", Toast.LENGTH_LONG).show();
                 countDownTimer.cancel();
                 countTextView.setText("");
             }
+            if (TextUtils.getTrimmedLength(result[0])>15) {
+                Toast.makeText(MainActivity.this, "すごくわかりやすい！！", Toast.LENGTH_LONG).show();
+                countDownTimer.cancel();
+                countTextView.setText("");
+            }
+            if (TextUtils.equals(result[0], "名前は")) {
+                Toast.makeText(MainActivity.this, "ひより15歳、彼氏絶賛大募集中です!!", Toast.LENGTH_LONG).show();
+                countDownTimer.cancel();
+                countTextView.setText("");
+            }
+
         }
 
         @Override
