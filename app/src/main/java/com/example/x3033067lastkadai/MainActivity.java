@@ -182,7 +182,16 @@ public class MainActivity extends Activity {
     //言語処理について
     private RecognitionListener recognitionListener = new RecognitionListener() {
 
-
+        @Override
+        public void onReadyForSpeech(Bundle bundle) {}
+        @Override
+        public void onBeginningOfSpeech() {}
+        @Override
+        public void onRmsChanged(float v){}
+        @Override
+        public void onBufferReceived(byte[] bytes) {}
+        @Override
+        public void onEndOfSpeech() {}
         @Override
         public void onError(int i) {
             switch (i) {
@@ -246,13 +255,28 @@ public class MainActivity extends Activity {
                 countDownTimer.cancel();
                 countTextView.setText("");
             }
-            if (TextUtils.getTrimmedLength(result[0])>15) {
+            if (TextUtils.equals(result[0], "これからアプリの紹介をしていきたいと思います")) {
+                Toast.makeText(MainActivity.this, "ご清聴ください！！", Toast.LENGTH_LONG).show();
+                countDownTimer.cancel();
+                countTextView.setText("");
+            }
+            if (TextUtils.getTrimmedLength(result[0])>40) {
                 Toast.makeText(MainActivity.this, "すごくわかりやすい！！", Toast.LENGTH_LONG).show();
                 countDownTimer.cancel();
                 countTextView.setText("");
             }
-            if (TextUtils.equals(result[0], "名前は")) {
-                Toast.makeText(MainActivity.this, "ひより15歳、彼氏絶賛大募集中です!!", Toast.LENGTH_LONG).show();
+            if (TextUtils.equals(result[0], "お名前は")) {
+                Toast.makeText(MainActivity.this, "ひよりです!!", Toast.LENGTH_LONG).show();
+                countDownTimer.cancel();
+                countTextView.setText("");
+            }
+            if (TextUtils.equals(result[0], "何で書かれてるの")) {
+                Toast.makeText(MainActivity.this, "動きはC++のSDKをJavaで呼び出している感じ!!", Toast.LENGTH_LONG).show();
+                countDownTimer.cancel();
+                countTextView.setText("");
+            }
+            if (TextUtils.equals(result[0], "実装するの大変でした")) {
+                Toast.makeText(MainActivity.this, "ごめんねー^^;", Toast.LENGTH_LONG).show();
                 countDownTimer.cancel();
                 countTextView.setText("");
             }
