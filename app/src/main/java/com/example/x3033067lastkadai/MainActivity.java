@@ -38,7 +38,9 @@ import java.util.Locale;
 import static android.Manifest.permission.RECORD_AUDIO;
 
 public class MainActivity extends Activity {
-    private static final int MILLIS_IN_FUTURE = 11 * 500;
+    //countDownタイマーの秒数
+    private static final int MILLIS_IN_FUTURE = 8500;
+    //countするインターバル1秒
     private static final int COUNT_DOWN_INTERVAL = 1000;
 
     private Intent intent;
@@ -179,30 +181,7 @@ public class MainActivity extends Activity {
 
     //言語処理について
     private RecognitionListener recognitionListener = new RecognitionListener() {
-        @Override
-        public void onReadyForSpeech(Bundle bundle) {
-            Log.d("log:: ", "準備できてます");
-        }
 
-        @Override
-        public void onBeginningOfSpeech() {
-            Log.d("log:: ", "始め！");
-        }
-
-        @Override
-        public void onRmsChanged(float v) {
-            Log.d("log:: ", "音声が変わった");
-        }
-
-        @Override
-        public void onBufferReceived(byte[] bytes) {
-            Log.d("log:: ", "新しい音声");
-        }
-
-        @Override
-        public void onEndOfSpeech() {
-            Log.d("log:: ", "終わりました");
-        }
 
         @Override
         public void onError(int i) {
