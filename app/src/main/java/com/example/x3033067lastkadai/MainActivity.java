@@ -45,7 +45,7 @@ public class MainActivity extends Activity {
     private SpeechRecognizer mRecognizer;
     private TextView textView;
 
-    private int count = 5;
+    private int count = 8;
     private TextView countTextView;
     private CountDownTimer countDownTimer;
 
@@ -111,22 +111,20 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // 音声テキスト初期化
                 if (!TextUtils.isEmpty(textView.getText())) {
                     textView.setText("");
                 }
-
                 // カウントダウンスタート
                 countDownTimer();
                 countDownTimer.start();
-
                 // レコーディングスタート
                 mRecognizer.startListening(intent);
             }
         });
     }
 
+    //CubismのSDKのまま
     @Override
     protected void onStart() {
         super.onStart();
@@ -175,6 +173,7 @@ public class MainActivity extends Activity {
         }
         return super.onTouchEvent(event);
     }
+    //ここまで
 
 
 
@@ -229,12 +228,12 @@ public class MainActivity extends Activity {
                     textView.setText("クライアントエラー");
                     break;
                 case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                    resetText();
-                    textView.setText("何も聞こえてないエラー");
+                    countDownTimer.cancel();
+                    Toast.makeText(MainActivity.this, "なにも聞き取れなかったよ...", Toast.LENGTH_LONG).show();
                     break;
                 case SpeechRecognizer.ERROR_NO_MATCH:
                     resetText();
-                    textView.setText("適当な結果を見つけてませんエラー");
+                    textView.setText("なんていってるかわからないエラー");
                     break;
                 case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
                     resetText();
@@ -292,13 +291,13 @@ public class MainActivity extends Activity {
 
     private void resetText() {
         countDownTimer.cancel();
-        countTextView.setText("やり直し！");
+        countTextView.setText("エラー！");
     }
 
     public void countDownTimer() {
         if (countDownTimer != null) {
             countDownTimer.cancel();
-            count = 5;
+            count = 8;
         }
 
         countDownTimer = new CountDownTimer(MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL) {
