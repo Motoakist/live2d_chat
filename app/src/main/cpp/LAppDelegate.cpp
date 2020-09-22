@@ -140,7 +140,7 @@ void LAppDelegate::OnSurfaceChanged(float width, float height)
 LAppDelegate::LAppDelegate():
     _cubismOption(),
     _captured(false),
-    _SceneIndex(0),
+    _SceneIndex(1),
     _mouseX(0.0f),
     _mouseY(0.0f),
     _isActive(true),

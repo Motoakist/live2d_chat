@@ -50,7 +50,7 @@ void LAppLive2DManager::ReleaseInstance()
 
 LAppLive2DManager::LAppLive2DManager()
     : _viewMatrix(NULL)
-    , _sceneIndex(0)
+    , _sceneIndex(1)
 {
     ChangeScene(_sceneIndex);
 }
