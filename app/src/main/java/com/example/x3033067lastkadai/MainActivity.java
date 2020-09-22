@@ -247,12 +247,16 @@ public class MainActivity extends Activity {
             }
 
             textView.setText(result[0]);
+//            int kanjo = 0;
 
             // テキスト比較
             if (TextUtils.equals(result[0], "おはようございます")) {
                 Toast.makeText(MainActivity.this, "おはよう！！", Toast.LENGTH_LONG).show();
                 countDownTimer.cancel();
                 countTextView.setText("");
+                //cppに感情値を渡す
+                int kanjo = 6;
+                JniBridgeJava.nativeTalked(kanjo);
             }
             if (TextUtils.equals(result[0], "これからアプリの紹介をしていきたいと思います")) {
                 Toast.makeText(MainActivity.this, "ご清聴ください！！", Toast.LENGTH_LONG).show();

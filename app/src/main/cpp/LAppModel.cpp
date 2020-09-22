@@ -491,10 +491,27 @@ CubismMotionQueueEntryHandle LAppModel::StartRandomMotion(const csmChar* group, 
         return InvalidMotionQueueEntryHandleValue;
     }
 
-    csmInt32 no = rand() % _modelSetting->GetMotionCount(group);
+//    csmInt32 no = rand() % _modelSetting->GetMotionCount(group);
+    csmInt32 no = 0;
 
     return StartMotion(group, no, priority, onFinishedMotionHandler);
 }
+
+////音声を聞き取ったら
+//CubismMotionQueueEntryHandle LAppModel::StartTalkedMotion(const csmChar* group, csmInt32 priority, ACubismMotion::FinishedMotionCallback onFinishedMotionHandler)
+//{
+//    if (_modelSetting->GetMotionCount(group) == 0)
+//    {
+//        return InvalidMotionQueueEntryHandleValue;
+//    }
+//
+////    csmInt32 no = rand() % _modelSetting->GetMotionCount(group);
+//    csmInt32 no = 4;
+//
+//    return StartMotion(group, no, priority, onFinishedMotionHandler);
+//}
+
+
 
 void LAppModel::DoDraw()
 {

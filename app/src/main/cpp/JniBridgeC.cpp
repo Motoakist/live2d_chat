@@ -132,5 +132,11 @@ extern "C"
     {
         LAppDelegate::GetInstance()->OnTouchMoved(pointX, pointY);
     }
+
+    JNIEXPORT void JNICALL
+    Java_com_example_x3033067lastkadai_JniBridgeJava_nativeTalked(JNIEnv *env, jclass type, jint kanjo)
+    {
+        LAppDelegate::GetInstance()->Talked(kanjo);
+    }
 }
 

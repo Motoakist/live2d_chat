@@ -14,6 +14,7 @@
 #include "LAppLive2DManager.hpp"
 #include "LAppTextureManager.hpp"
 #include "JniBridgeC.hpp"
+#include "LAppModel.hpp"
 
 using namespace Csm;
 using namespace std;
@@ -145,7 +146,8 @@ LAppDelegate::LAppDelegate():
     _mouseY(0.0f),
     _isActive(true),
     _textureManager(NULL),
-    _view(NULL)
+    _view(NULL),
+    _kanjo(0)
 {
     // Setup Cubism
     _cubismOption.LogFunction = LAppPal::PrintMessage;
@@ -192,6 +194,15 @@ void LAppDelegate::OnTouchMoved(double x, double y)
         _view->OnTouchesMoved(_mouseX, _mouseY);
     }
 }
+
+void LAppDelegate::Talked(int kanjo)
+{
+    _kanjo = static_cast<int>(kanjo);
+    printf("感情値",_kanjo);
+//    StartMotion(MotionGroupIdle, _kanjo, PriorityIdle, onFinishedMotionHandler);
+}
+
+
 
 GLuint LAppDelegate::CreateShader()
 {

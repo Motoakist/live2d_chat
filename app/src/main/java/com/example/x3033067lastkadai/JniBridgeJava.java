@@ -45,6 +45,9 @@ public class JniBridgeJava {
 
     public static native void nativeOnTouchesMoved(float pointX, float pointY);
 
+    //感情値をcppに渡す
+    public static native void nativeTalked(int kanjo);
+
     // Java -----------------------------------------------------------------
 
     public static void SetContext(Context context) {

@@ -49,6 +49,7 @@ namespace LAppDefine {
     // 外部定義ファイル(json)と合わせる
     const csmChar* MotionGroupIdle = "Idle"; // アイドリング
     const csmChar* MotionGroupTapBody = "TapBody"; // 体をタップしたとき
+    const csmChar* MotionGroupTalked = "Talked"; //話しかけられた時(csmCharが何かはよくわからない...)
 
     // 外部定義ファイル(json)と合わせる
     const csmChar* HitAreaNameHead = "Head";

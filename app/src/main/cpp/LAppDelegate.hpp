@@ -96,6 +96,12 @@ public:
     */
     void OnTouchMoved(double x, double y);
 
+    /**感情値の引き渡し
+     *
+     * @param kanjo
+     */
+    void Talked(int kanjo);
+
     /**
     * @brief シェーダーを登録する。
     */
@@ -153,4 +159,5 @@ private:
     bool _isActive;                              ///< アプリがアクティブ状態なのか
     float _mouseY;                               ///< マウスY座標
     float _mouseX;                               ///< マウスX座標
+    int _kanjo;                                  ///< 感情値
 };
