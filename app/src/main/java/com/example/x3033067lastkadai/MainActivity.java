@@ -1,4 +1,3 @@
-
 /**
  * Copyright(c) Live2D Inc. All rights reserved.
  * <p>
@@ -19,7 +18,6 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.text.TextUtils;
-import android.util.JsonWriter;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,20 +31,7 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import static android.Manifest.permission.RECORD_AUDIO;
@@ -262,101 +247,6 @@ public class MainActivity extends Activity {
             }
 
             textView.setText(result[0]);
-
-            //ここから極性辞書の読み込み
-            char[] dictionary = new char[55125];
-            try{
-                File file = new File("../../dictionary/dictionary.txt");
-                FileReader filereader = new FileReader(file);
-
-                int ch;
-                int count=0;
-                while((ch = filereader.read()) != -1){
-                    System.out.print((char)ch);
-                    dictionary[count] = (char)ch;
-                    System.out.println(count);
-                    count += 1;
-                }
-
-                filereader.close();
-            }catch(FileNotFoundException e){
-                System.out.println(e);
-            }catch(IOException e){
-                System.out.println(e);
-            }
-            //ここまで
-
-
-            int cnt = 0;
-            //極性辞書に含まれる文字列が、ユーザーの発した音声に含まれるかどうか
-            for (int i = 0; i < 55126; i++) {
-                //まだ書き途中ですが、このresult[0]つまり、ユーザーの発言した文字列に
-                //辞書の中の単語がある場合、その単語に対応する数値をkanjoに追加します
-                if (TextUtils.equals(result[0], dictionary[cnt])) {
-                    int kanjo = 0;
-                    if (kanjo > 1) {
-                        //喜びを示すjsonに書き換える
-                        JsonWriter writer;
-                        try {
-                            //ここにlive2dキャラの動きが記述されている
-                            //このファイルを読み書きしたいです。
-                            writer = new JsonWriter(new FileWriter("../../../../Resources/Hiyori/Hiyori.model3.json"));
-
-                            writer.beginObject();//{
-                            //m01が喜ぶような動きになっています。
-                            writer.name("idle").value("\"File\": \"motions/Hiyori_m01.motion3.json\",\n" +
-                                    "\t\t\t\t\t\"FadeInTime\": 0.5,\n" +
-                                    "\t\t\t\t\t\"FadeOutTime\": 0.5");
-                            writer.endObject();//}
-                            writer.close();
-                            System.out.println("Done");
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                        //ここまでjson
-                    if ((kanjo <= 1) && (kanjo >= -1)){
-                        //ニュートラルな動きを示すjsonに書き換える
-                        JsonWriter writer;
-                        try {
-                            writer = new JsonWriter(new FileWriter("../../../../Resources/Hiyori/Hiyori.model3.json"));
-
-                            writer.beginObject();//{
-                            writer.name("idle").value("\"File\": \"motions/Hiyori_m02.motion3.json\",\n" +
-                                    "\t\t\t\t\t\"FadeInTime\": 0.5,\n" +
-                                    "\t\t\t\t\t\"FadeOutTime\": 0.5");
-                            writer.endObject();//}
-                            writer.close();
-                            System.out.println("Done");
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    if (kanjo < -1){
-                        //悲しみを示すjsonに書き換える
-                        JsonWriter writer;
-                        try {
-                            writer = new JsonWriter(new FileWriter("../../../../Resources/Hiyori/Hiyori.model3.json"));
-
-                            writer.beginObject();//{
-                            writer.name("idle").value("\"File\": \"motions/Hiyori_m03.motion3.json\",\n" +
-                                    "\t\t\t\t\t\"FadeInTime\": 0.5,\n" +
-                                    "\t\t\t\t\t\"FadeOutTime\": 0.5");
-                            writer.endObject();//}
-                            writer.close();
-                            System.out.println("Done");
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                cnt += 1;
-            }
-
 
             // テキスト比較
             if (TextUtils.equals(result[0], "おはようございます")) {

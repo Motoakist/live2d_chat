@@ -63,6 +63,23 @@
 					"FadeInTime": 0.5,
 					"FadeOutTime": 0.5
 				}
+			],
+			"Talked": [
+				{
+					"File": "motions/Hiyori_m08.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				},
+				{
+					"File": "motions/Hiyori_m09.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				},
+				{
+					"File": "motions/Hiyori_m10.motion3.json",
+					"FadeInTime": 0.5,
+					"FadeOutTime": 0.5
+				}
 			]
 		}
 	},
