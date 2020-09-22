@@ -10,6 +10,7 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include "LAppAllocator.hpp"
+#include "LAppModel.hpp"
 
 class LAppView;
 class LAppTextureManager;
@@ -152,6 +153,7 @@ private:
     Csm::CubismFramework::Option _cubismOption;  ///< Cubism SDK Option
     LAppTextureManager* _textureManager;         ///< テクスチャマネージャー
     LAppView* _view;                             ///< View情報
+    LAppModel* _models;                          ///< Modelsの情報
     int _width;                                  ///< Windowの幅
     int _height;                                 ///< windowの高さ
     int _SceneIndex;                             ///< モデルシーンインデックス

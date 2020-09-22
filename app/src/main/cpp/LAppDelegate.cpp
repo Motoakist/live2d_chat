@@ -49,6 +49,7 @@ void LAppDelegate::OnStart()
 {
     _textureManager = new LAppTextureManager();
     _view = new LAppView();
+    _models = new LAppModel();
     LAppPal::UpdateTime();
 }
 
@@ -199,7 +200,7 @@ void LAppDelegate::Talked(int kanjo)
 {
     _kanjo = static_cast<int>(kanjo);
     printf("感情値",_kanjo);
-//    StartMotion(MotionGroupIdle, _kanjo, PriorityIdle, onFinishedMotionHandler);
+    _models->StartMotion(MotionGroupIdle, _kanjo, PriorityIdle, ACubismMotion::FinishedMotionCallback());
 }
 
 
