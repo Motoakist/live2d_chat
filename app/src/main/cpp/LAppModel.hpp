@@ -78,6 +78,8 @@ public:
      */
     Csm::CubismMotionQueueEntryHandle StartRandomMotion(const Csm::csmChar* group, Csm::csmInt32 priority, Csm::ACubismMotion::FinishedMotionCallback onFinishedMotionHandler = NULL);
 
+    Csm::CubismMotionQueueEntryHandle Start1Motion(const Csm::csmChar* group, Csm::csmInt32 priority, Csm::ACubismMotion::FinishedMotionCallback onFinishedMotionHandler = NULL);
+
     /**
      * @brief   引数で指定した表情モーションをセットする
      *
@@ -90,6 +92,12 @@ public:
      *
      */
     void SetRandomExpression();
+
+    /**
+     * 感情値をインデックスで設定する
+     * @param expression
+     */
+    void SetExpressionByIndex(int expression);
 
     /**
     * @brief   イベントの発火を受け取る

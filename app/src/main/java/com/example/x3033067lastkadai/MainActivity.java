@@ -1,3 +1,4 @@
+
 /**
  * Copyright(c) Live2D Inc. All rights reserved.
  * <p>
@@ -52,6 +53,8 @@ public class MainActivity extends Activity {
 
     private GLSurfaceView _glSurfaceView;
     private GLRenderer _glRenderer;
+
+    private int expression_counter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +170,11 @@ public class MainActivity extends Activity {
                 break;
             case MotionEvent.ACTION_UP:
                 JniBridgeJava.nativeOnTouchesEnded(pointX, pointY);
+                // 感情を変える
+                expression_counter = 4;
+                JniBridgeJava.changeAllExpression(expression_counter);
+                textView.setText(String.valueOf(expression_counter));
+//                this.expression_counter++;
                 break;
             case MotionEvent.ACTION_MOVE:
                 JniBridgeJava.nativeOnTouchesMoved(pointX, pointY);
@@ -247,16 +255,16 @@ public class MainActivity extends Activity {
             }
 
             textView.setText(result[0]);
-//            int kanjo = 0;
 
             // テキスト比較
             if (TextUtils.equals(result[0], "おはようございます")) {
                 Toast.makeText(MainActivity.this, "おはよう！！", Toast.LENGTH_LONG).show();
                 countDownTimer.cancel();
                 countTextView.setText("");
-                //cppに感情値を渡す
-                int kanjo = 6;
-                JniBridgeJava.nativeTalked(kanjo);
+                expression_counter = 5;
+                JniBridgeJava.changeAllExpression(expression_counter);
+                textView.setText(String.valueOf(expression_counter));
+                // 5と指定しても、ランダムなモーションになってしまう
             }
             if (TextUtils.equals(result[0], "これからアプリの紹介をしていきたいと思います")) {
                 Toast.makeText(MainActivity.this, "ご清聴ください！！", Toast.LENGTH_LONG).show();

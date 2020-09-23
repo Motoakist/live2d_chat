@@ -10,7 +10,6 @@
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>
 #include "LAppAllocator.hpp"
-#include "LAppModel.hpp"
 
 class LAppView;
 class LAppTextureManager;
@@ -97,11 +96,11 @@ public:
     */
     void OnTouchMoved(double x, double y);
 
-    /**感情値の引き渡し
-     *
-     * @param kanjo
+    /**
+     * 全モデルの感情値を変える．
+     * @param expression
      */
-    void Talked(int kanjo);
+    void ChangeAllExpression(int expression);
 
     /**
     * @brief シェーダーを登録する。
@@ -153,7 +152,6 @@ private:
     Csm::CubismFramework::Option _cubismOption;  ///< Cubism SDK Option
     LAppTextureManager* _textureManager;         ///< テクスチャマネージャー
     LAppView* _view;                             ///< View情報
-    LAppModel* _models;                          ///< Modelsの情報
     int _width;                                  ///< Windowの幅
     int _height;                                 ///< windowの高さ
     int _SceneIndex;                             ///< モデルシーンインデックス
@@ -161,5 +159,4 @@ private:
     bool _isActive;                              ///< アプリがアクティブ状態なのか
     float _mouseY;                               ///< マウスY座標
     float _mouseX;                               ///< マウスX座標
-    int _kanjo;                                  ///< 感情値
 };

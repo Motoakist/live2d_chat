@@ -14,7 +14,6 @@
 #include "LAppLive2DManager.hpp"
 #include "LAppTextureManager.hpp"
 #include "JniBridgeC.hpp"
-#include "LAppModel.hpp"
 
 using namespace Csm;
 using namespace std;
@@ -49,7 +48,6 @@ void LAppDelegate::OnStart()
 {
     _textureManager = new LAppTextureManager();
     _view = new LAppView();
-    _models = new LAppModel();
     LAppPal::UpdateTime();
 }
 
@@ -140,15 +138,14 @@ void LAppDelegate::OnSurfaceChanged(float width, float height)
 }
 
 LAppDelegate::LAppDelegate():
-    _cubismOption(),
-    _captured(false),
-    _SceneIndex(1),
-    _mouseX(0.0f),
-    _mouseY(0.0f),
-    _isActive(true),
-    _textureManager(NULL),
-    _view(NULL),
-    _kanjo(0)
+        _cubismOption(),
+        _captured(false),
+        _SceneIndex(1),
+        _mouseX(0.0f),
+        _mouseY(0.0f),
+        _isActive(true),
+        _textureManager(NULL),
+        _view(NULL)
 {
     // Setup Cubism
     _cubismOption.LogFunction = LAppPal::PrintMessage;
@@ -196,42 +193,38 @@ void LAppDelegate::OnTouchMoved(double x, double y)
     }
 }
 
-void LAppDelegate::Talked(int kanjo)
+void LAppDelegate::ChangeAllExpression(int expression)
 {
-    _kanjo = static_cast<int>(kanjo);
-    printf("感情値",_kanjo);
-    _models->StartMotion(MotionGroupIdle, _kanjo, PriorityIdle, ACubismMotion::FinishedMotionCallback());
+    LAppLive2DManager::GetInstance()->SetAllExpression(expression);
 }
-
-
 
 GLuint LAppDelegate::CreateShader()
 {
     //バーテックスシェーダのコンパイル
     GLuint vertexShaderId = glCreateShader(GL_VERTEX_SHADER);
     const char* vertexShader =
-        "#version 100\n"
-        "attribute vec3 position;"
-        "attribute vec2 uv;"
-        "varying vec2 vuv;"
-        "void main(void){"
-        "    gl_Position = vec4(position, 1.0);"
-        "    vuv = uv;"
-        "}";
+            "#version 100\n"
+            "attribute vec3 position;"
+            "attribute vec2 uv;"
+            "varying vec2 vuv;"
+            "void main(void){"
+            "    gl_Position = vec4(position, 1.0);"
+            "    vuv = uv;"
+            "}";
     glShaderSource(vertexShaderId, 1, &vertexShader, NULL);
     glCompileShader(vertexShaderId);
 
     //フラグメントシェーダのコンパイル
     GLuint fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
     const char* fragmentShader =
-        "#version 100\n"
-        "precision mediump float;"
-        "varying vec2 vuv;"
-        "uniform sampler2D texture;"
-        "uniform vec4 baseColor;"
-        "void main(void){"
-        "    gl_FragColor = texture2D(texture, vuv) * baseColor;"
-        "}";
+            "#version 100\n"
+            "precision mediump float;"
+            "varying vec2 vuv;"
+            "uniform sampler2D texture;"
+            "uniform vec4 baseColor;"
+            "void main(void){"
+            "    gl_FragColor = texture2D(texture, vuv) * baseColor;"
+            "}";
     glShaderSource(fragmentShaderId, 1, &fragmentShader, NULL);
     glCompileShader(fragmentShaderId);
 

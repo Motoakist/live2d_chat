@@ -49,8 +49,8 @@ void LAppLive2DManager::ReleaseInstance()
 }
 
 LAppLive2DManager::LAppLive2DManager()
-    : _viewMatrix(NULL)
-    , _sceneIndex(1)
+        : _viewMatrix(NULL)
+        , _sceneIndex(0)
 {
     ChangeScene(_sceneIndex);
 }
@@ -113,8 +113,20 @@ void LAppLive2DManager::OnTap(csmFloat32 x, csmFloat32 y)
             {
                 LAppPal::PrintLog("[APP]hit area: [%s]", HitAreaNameBody);
             }
-            _models[i]->StartRandomMotion(MotionGroupTapBody, PriorityNormal, FinishedMotion);
+//            _models[i]->StartRandomMotion(MotionGroupTapBody, PriorityNormal, FinishedMotion);
         }
+    }
+}
+
+void LAppLive2DManager::SetAllExpression(int expression) {
+
+    // とりあえず全てのモデルの感情値を変更する
+    for (csmUint32 i = 0; i < _models.GetSize(); i++)
+    {
+        _models[i]->SetExpressionByIndex(expression);
+        //touchからidleに変えたらいけた
+//        _models[i]->Start1Motion(MotionGroupIdle,PriorityNormal,FinishedMotion);
+        _models[i]->StartMotion(MotionGroupIdle,expression,PriorityNormal,FinishedMotion);
     }
 }
 

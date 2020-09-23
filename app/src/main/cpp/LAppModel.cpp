@@ -16,6 +16,7 @@
 #include <Utils/CubismString.hpp>
 #include <Id/CubismIdManager.hpp>
 #include <Motion/CubismMotionQueueEntry.hpp>
+#include <android/log.h>
 #include "LAppDefine.hpp"
 #include "LAppPal.hpp"
 #include "LAppTextureManager.hpp"
@@ -46,9 +47,9 @@ namespace {
 }
 
 LAppModel::LAppModel()
-    : CubismUserModel()
-    , _modelSetting(NULL)
-    , _userTimeSeconds(0.0f)
+        : CubismUserModel()
+        , _modelSetting(NULL)
+        , _userTimeSeconds(0.0f)
 {
     if (DebugLogEnable)
     {
@@ -347,7 +348,7 @@ void LAppModel::Update()
     if (_motionManager->IsFinished())
     {
         // モーションの再生がない場合、待機モーションの中からランダムで再生する
-        StartRandomMotion(MotionGroupIdle, PriorityIdle);
+//        StartRandomMotion(MotionGroupIdle, PriorityIdle);
     }
     else
     {
@@ -497,21 +498,18 @@ CubismMotionQueueEntryHandle LAppModel::StartRandomMotion(const csmChar* group, 
     return StartMotion(group, no, priority, onFinishedMotionHandler);
 }
 
-////音声を聞き取ったら
-//CubismMotionQueueEntryHandle LAppModel::StartTalkedMotion(const csmChar* group, csmInt32 priority, ACubismMotion::FinishedMotionCallback onFinishedMotionHandler)
-//{
-//    if (_modelSetting->GetMotionCount(group) == 0)
-//    {
-//        return InvalidMotionQueueEntryHandleValue;
-//    }
-//
-////    csmInt32 no = rand() % _modelSetting->GetMotionCount(group);
-//    csmInt32 no = 4;
-//
-//    return StartMotion(group, no, priority, onFinishedMotionHandler);
-//}
+CubismMotionQueueEntryHandle LAppModel::Start1Motion(const csmChar* group, csmInt32 priority, ACubismMotion::FinishedMotionCallback onFinishedMotionHandler)
+{
+    if (_modelSetting->GetMotionCount(group) == 0)
+    {
+        return InvalidMotionQueueEntryHandleValue;
+    }
 
+//    csmInt32 no = rand() % _modelSetting->GetMotionCount(group);
+    csmInt32 no = 5;
 
+    return StartMotion(group, no, priority, onFinishedMotionHandler);
+}
 
 void LAppModel::DoDraw()
 {
@@ -572,6 +570,38 @@ void LAppModel::SetExpression(const csmChar* expressionID)
     {
         if (_debugMode) LAppPal::PrintLog("[APP]expression[%s] is null ", expressionID);
     }
+}
+
+void LAppModel::SetExpressionByIndex(int expression)
+{
+    if (_expressions.GetSize() == 0)
+    {
+        return;
+    }
+
+//    csmInt32 expressionIdx = rand() % _expressions.GetSize();
+    csmInt32 expressionIdx = expression % _expressions.GetSize();
+//    StartMotion(MotionGroupIdle, expression, PriorityForce);
+
+
+    int i = 0;
+    for (csmMap<csmString, ACubismMotion*>::const_iterator map_ite = _expressions.Begin();
+         map_ite != _expressions.End();
+         map_ite++)
+    {
+        if (i == expressionIdx)
+        {
+            csmString name = (*map_ite).First;
+            SetExpression(name.GetRawString());
+            __android_log_print(ANDROID_LOG_VERBOSE, "com.example.x3033067lastkadai", "expression: %d, expression name:%s", i, name.GetRawString());
+            return;
+        }
+        i++;
+    }
+
+
+
+
 }
 
 void LAppModel::SetRandomExpression()

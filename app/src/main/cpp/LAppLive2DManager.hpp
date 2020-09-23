@@ -67,6 +67,12 @@ public:
     void OnTap(Csm::csmFloat32 x, Csm::csmFloat32 y);
 
     /**
+     * 全モデルの感情を一律にインデックスで設定する
+     * @param expression
+     */
+    void SetAllExpression(int expression);
+
+    /**
     * @brief   画面を更新するときの処理
     *          モデルの更新処理および描画処理を行う
     */
