@@ -168,7 +168,6 @@ public class MainActivity extends Activity {
 
         // 音声認識スタートボタン
         ImageButton button = (ImageButton) findViewById(R.id.buttonView);
-        //ここが原因で落ちる...
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -368,21 +367,25 @@ public class MainActivity extends Activity {
                 expression_counter = 8;
                 JniBridgeJava.changeAllExpression(expression_counter);
                 textView.setText(String.valueOf(result[0] +"\n感情値:"+emotion));
+                Toast.makeText(MainActivity.this, "大丈夫...??頑張れそう...??", Toast.LENGTH_LONG).show();
 
             }else if((0 <= emotion)&&(emotion < 0.5)) {
                 expression_counter = 1;
                 JniBridgeJava.changeAllExpression(expression_counter);
                 textView.setText(String.valueOf(result[0] +"\n感情値:"+ emotion));
+                Toast.makeText(MainActivity.this, "いいんじゃないかな！", Toast.LENGTH_LONG).show();
 
             }else if (emotion >= 0.5) {
                 expression_counter = 6;
                 JniBridgeJava.changeAllExpression(expression_counter);
                 textView.setText(String.valueOf(result[0] +"\n感情値:"+ emotion));
+                Toast.makeText(MainActivity.this, "最高！！いいね！！", Toast.LENGTH_LONG).show();
 
             }else {
                 expression_counter = 7;
                 JniBridgeJava.changeAllExpression(expression_counter);
                 textView.setText(String.valueOf(result[0] +"\n感情値:"+ emotion));
+                Toast.makeText(MainActivity.this, "そんなのひどいね！！", Toast.LENGTH_LONG).show();
 
             }
 
