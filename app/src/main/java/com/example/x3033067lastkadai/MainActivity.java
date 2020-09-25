@@ -353,6 +353,16 @@ public class MainActivity extends Activity {
                 }
             }
 
+            String[] emphasis = {"すごい","すげー","すごく","すんごい","めっちゃ","めっさ"
+                    ,"めちゃくちゃ","ちょう","超","とても","とっても"};
+            int n_empha = emphasis.length;
+            for (int j = 0; j < n_empha; j++){
+                if (result[0].contains(emphasis[j])){
+                    emotion = emotion*2;
+
+                }
+            }
+
             System.out.println(emotion);
             if((-5 < emotion)&&(emotion < 0)) {
                 expression_counter = 8;
