@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 
     private int expression_counter;
 
-    int dic_len = 55115;
+    int dic_len = 55112;
     String[] dic_w = new String[dic_len];
     String[] dic_n = new String[dic_len];
 
