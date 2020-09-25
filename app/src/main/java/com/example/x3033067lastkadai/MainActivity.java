@@ -11,6 +11,7 @@ package com.example.x3033067lastkadai;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +24,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,8 +32,15 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 
@@ -56,8 +63,58 @@ public class MainActivity extends Activity {
 
     private int expression_counter;
 
+    int dic_len = 55120;
+    String[] dic_w = new String[dic_len];
+    String[] dic_n = new String[dic_len];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        InputStream isw = null;
+        BufferedReader brw = null;
+        int i = 0;
+        try {
+            try {
+                // assetsフォルダ内の sample.txt をオープンする
+                isw = this.getAssets().open("words.txt");
+                brw = new BufferedReader(new InputStreamReader(isw));
+                // １行ずつ読み込み、改行を付加する
+                String str;
+                while ((str = brw.readLine()) != null) {
+                    dic_w[i] = str;
+                    i += 1;
+                }
+            } finally {
+                if (isw != null) isw.close();
+                if (brw != null) brw.close();
+            }
+        } catch (Exception e){
+            // エラー発生時の処理
+        }
+
+        InputStream isn = null;
+        BufferedReader brn = null;
+        i = 0;
+        try {
+            try {
+                // assetsフォルダ内の sample.txt をオープンする
+                isn = this.getAssets().open("numbers.txt");
+                brn = new BufferedReader(new InputStreamReader(isn));
+                // １行ずつ読み込み、改行を付加する
+                String str;
+                while ((str = brn.readLine()) != null) {
+                    dic_n[i] = str;
+                    i += 1;
+                }
+            } finally {
+                if (isn != null) isn.close();
+                if (brn != null) brn.close();
+            }
+        } catch (Exception e){
+            // エラー発生時の処理
+        }
+
+
         super.onCreate(savedInstanceState);
 
         JniBridgeJava.SetActivityInstance(this);
@@ -263,16 +320,11 @@ public class MainActivity extends Activity {
                 countTextView.setText("");
                 expression_counter = 5;
                 JniBridgeJava.changeAllExpression(expression_counter);
-                textView.setText(String.valueOf(expression_counter));
+//                textView.setText(String.valueOf(expression_counter));
                 // 5と指定しても、ランダムなモーションになってしまう
             }
             if (TextUtils.equals(result[0], "これからアプリの紹介をしていきたいと思います")) {
                 Toast.makeText(MainActivity.this, "ご清聴ください！！", Toast.LENGTH_LONG).show();
-                countDownTimer.cancel();
-                countTextView.setText("");
-            }
-            if (TextUtils.getTrimmedLength(result[0])>40) {
-                Toast.makeText(MainActivity.this, "すごくわかりやすい！！", Toast.LENGTH_LONG).show();
                 countDownTimer.cancel();
                 countTextView.setText("");
             }
@@ -291,6 +343,43 @@ public class MainActivity extends Activity {
                 countDownTimer.cancel();
                 countTextView.setText("");
             }
+            //
+            float emotion = 0f;
+            System.out.println(emotion);
+            for (int j = 0; j < dic_len; j++){
+                if (result[0].contains(dic_w[j])){
+                    emotion += Float.parseFloat(dic_n[j]);
+
+                }
+            }
+
+            System.out.println(emotion);
+            if((-5 < emotion)&&(emotion < 0)) {
+                expression_counter = 8;
+                JniBridgeJava.changeAllExpression(expression_counter);
+                textView.setText(String.valueOf(result[0] +"\n感情値:"+emotion));
+
+            }else if((0 <= emotion)&&(emotion < 0.5)) {
+                expression_counter = 1;
+                JniBridgeJava.changeAllExpression(expression_counter);
+                textView.setText(String.valueOf(result[0] +"\n感情値:"+ emotion));
+
+            }else if (emotion >= 0.5) {
+                expression_counter = 6;
+                JniBridgeJava.changeAllExpression(expression_counter);
+                textView.setText(String.valueOf(result[0] +"\n感情値:"+ emotion));
+
+            }else {
+                expression_counter = 7;
+                JniBridgeJava.changeAllExpression(expression_counter);
+                textView.setText(String.valueOf(result[0] +"\n感情値:"+ emotion));
+
+            }
+
+
+
+
+
 
         }
 
