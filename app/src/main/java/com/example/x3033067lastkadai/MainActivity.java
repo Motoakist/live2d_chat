@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 
     private int expression_counter;
 
-    int dic_len = 55112;
+    int dic_len = 55113;
     String[] dic_w = new String[dic_len];
     String[] dic_n = new String[dic_len];
 
@@ -228,9 +228,9 @@ public class MainActivity extends Activity {
             case MotionEvent.ACTION_UP:
                 JniBridgeJava.nativeOnTouchesEnded(pointX, pointY);
                 // 感情を変える
-                expression_counter = 4;
+                expression_counter = 5;
                 JniBridgeJava.changeAllExpression(expression_counter);
-                textView.setText(String.valueOf(expression_counter));
+//                textView.setText(String.valueOf(expression_counter));
 //                this.expression_counter++;
                 break;
             case MotionEvent.ACTION_MOVE:
