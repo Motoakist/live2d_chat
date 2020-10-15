@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+/Core/lib/android/arm64-v8a/libLive2DCubismCore.a
+/Core/lib/android/armeabi-v7a/libLive2DCubismCore.a
+/Core/lib/android/x86/libLive2DCubismCore.a
